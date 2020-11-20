@@ -4,7 +4,10 @@
   "description": "Pure JavaScript Excel",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack",
+    "build": "webpack --mode production"
+
   },
   "repository": {
     "type": "git",
@@ -15,11 +18,15 @@
     "javascript",
     "excel"
   ],
-  "author": "Alexandr Bannykh <interind@yandex.ru>",
+  "author": "Alexander Bannykh <interind@yandex.ru>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/interind/excel-course/issues"
   },
   "homepage": "https://github.com/interind/excel-course#readme",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "webpack": "^5.6.0",
+    "webpack-cli": "^4.2.0"
+  }
 }
