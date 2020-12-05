@@ -42,7 +42,7 @@ export function createTable(rowsCount = 15) {
       .join(''); // приводим массив к строке.
   rows.push(createRow(null, cols));
   for (let i = 0; i < rowsCount; i++) {
-    const cells = new Array(colsCount)
+    const cells = new Array(colsCount) // массив ячеек
         .fill('')
         .map(toCell)
         .join('');
