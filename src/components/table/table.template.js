@@ -3,26 +3,31 @@ const CODES = {
   Z: 90,
 };
 
-function toCell() {
+function toCell(_, col) { // ячейки
   return `
-    <div class="cell" contenteditable>
-     
+    <div class="cell" contenteditable data-col="${col}">
     </div>
   `;
 }
 
-function toColumn(col) {
+function toColumn(col, index) { // создаем колонку
   return `
-    <div class="column">
+    <div class="column" data-type="resizable" data-col="${index}">
       ${col}
+      <div class="col-resize" data-resize="col" ></div>
     </div>
   `;
 }
 
-function createRow(index, content='') {
+function createRow(index, content='') { // создаем строчку
+  const resize = index ?
+   '<div class="row-resize" data-resize="row"></div>' : '';
   return `
-    <div class="row">
-      <div class="row-info">${index ? index: ''}</div>
+    <div class="row" data-type="resizable">
+      <div class="row-info">
+        ${index ? index : ''}
+        ${resize}
+      </div>
       <div class="row-data">${content}</div>
     </div>
   `;
@@ -48,6 +53,5 @@ export function createTable(rowsCount = 15) {
         .join('');
     rows.push(createRow(i + 1, cells));
   }
-  console.log(rows);
   return rows.join('');
 }
