@@ -68,18 +68,19 @@
   }
   .col-resize, .row-resize {
     position: absolute;
-    right: 0;
     background: $primary-color;
+    right: -1px;
+    bottom: -1px;
     opacity: 0;
+    z-index: 1000;
 
-     &:hover {
+    &:hover {
       opacity: 1;
     }
   }
 
   .col-resize {  
-    top: 0;
-    bottom: -100vh;
+    top: -1px;
     width: 4px;
   
     &:hover {
@@ -88,8 +89,7 @@
   }
 
   .row-resize {
-    left: 0;
-    bottom: 0;
+    left: -1px;
     height: 4px;
   
     &:hover {
