@@ -2,8 +2,7 @@ class Dom {
   // класс для создания ДОМ элементов и добавления классов
   constructor(selector) {
     this.$el =
-      typeof selector === 'string' ?
-        document.querySelector(selector) :
+      typeof selector === 'string' ? document.querySelector(selector) :
         selector;
   }
 
@@ -42,13 +41,24 @@ class Dom {
     return this;
   }
 
+  addClass(className) {
+    this.$el.classList.add(className);
+  }
+
+  removeClass(className) {
+    this.$el.classList.remove(className);
+  }
+
+  find(selector) {
+    return $(this.$el.querySelector(selector));
+  }
+
   findAll(selector) {
     return this.$el.querySelectorAll(selector);
   }
 
   css(styles = {}) {
-    Object.keys(styles)
-        .forEach((key) => this.$el.style[key] = styles[key]);
+    Object.keys(styles).forEach((key) => (this.$el.style[key] = styles[key]));
   }
 
   get data() {

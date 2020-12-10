@@ -1,4 +1,4 @@
-import { $ } from '../../core/dom.js';
+import { $ } from '../../core/Dom.js';
 
 export function resizeHandler($root, event) { // логика ресайза таблицы
   const $resizer = $(event.target);

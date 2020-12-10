@@ -3,11 +3,16 @@ const CODES = {
   Z: 90,
 };
 
-function toCell(_, col) { // ячейки
-  return `
-    <div class="cell" contenteditable data-col="${col}">
-    </div>
-  `;
+function toCell(row) { // ячейки
+  return function(_, col) {
+    return `
+      <div class="cell"
+        contenteditable
+        data-col="${col}"
+        data-id="${row}:${col}"
+      ></div>
+    `;
+  };
 }
 
 function toColumn(col, index) { // создаем колонку
@@ -46,12 +51,12 @@ export function createTable(rowsCount = 15) {
       .map(toColumn) // обработка под шаблон
       .join(''); // приводим массив к строке.
   rows.push(createRow(null, cols));
-  for (let i = 0; i < rowsCount; i++) {
+  for (let row = 0; row < rowsCount; row++) {
     const cells = new Array(colsCount) // массив ячеек
         .fill('')
-        .map(toCell)
+        .map(toCell(row))
         .join('');
-    rows.push(createRow(i + 1, cells));
+    rows.push(createRow(row + 1, cells));
   }
   return rows.join('');
 }
