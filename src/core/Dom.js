@@ -14,6 +14,14 @@ class Dom {
     return this.$el.outerHTML.trim();
   }
 
+  id(parse) {
+    if (parse) {
+      const parsed = this.id().split(':');
+      return {row: +parsed[0], col: +parsed[1]};
+    }
+    return this.data.id;
+  }
+
   on(eventType, callback) {
     this.$el.addEventListener(eventType, callback);
   }
