@@ -1,14 +1,14 @@
 import { $ } from '../../core/Dom';
 import { createTable } from './table.template';
-import { shouldResize, isCell, matrix } from './table.functions';
 import { resizeHandler } from './table.resize';
 import { ExcelComponent } from '../../core/ExcelComponent';
 import { TableSelection } from './TableSelection';
+import { shouldResize, isCell, matrix, nextSelector} from './table.functions';
 export class Table extends ExcelComponent {
   static className = 'excel__table';
   constructor($root) {
     super($root, {
-      listeners: ['mousedown'],
+      listeners: ['mousedown', 'keydown'],
     });
   }
 
@@ -40,8 +40,27 @@ export class Table extends ExcelComponent {
             .map((id) => this.$root.find(`[data-id="${id}"]`));
         this.selection.selectGroup($cells);
       } else {
-        this.selection.select($(event.target)); // элемент с методами DOM
+        this.selection.select($target); // элемент с методами DOM
       }
     }
   }
+  onKeydown(event) {
+    const keys = [
+      'Enter',
+      'Tab',
+      'ArrowLeft',
+      'ArrowRight',
+      'ArrowUp',
+      'ArrowDown',
+    ];
+    const { key } = event;
+    if (keys.includes(key) && !event.shiftKey) {
+      event.preventDefault();
+      const id = this.selection.current.id(true);
+      const $next = this.$root.find(nextSelector(key, id));
+      this.selection.select($next);
+    }
+  }
 }
+
+
