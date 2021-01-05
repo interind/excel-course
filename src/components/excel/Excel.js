@@ -1,17 +1,20 @@
 import { $ } from '../../core/Dom';
+import { Emitter } from '../../core/Emitter';
 
 export class Excel { // главный класс формирует все компоненты.
   constructor(selector, options) {
     this.$el = $(selector), // теперь это наследник Dom.
     this.components = options.components || [];
+    this.emitter = new Emitter();
   }
 
   getRoot() { // сборка разметки для рендер
     const $root = $.create('div', 'excel');
+    const componentOptions = { emitter: this.emitter };
 
     this.components = this.components.map((Component) => {
       const $el = $.create('div', Component.className);
-      const component = new Component($el);
+      const component = new Component($el, componentOptions);
       $el.html(component.toHTML());
       $root.append($el);
       return component;
@@ -23,5 +26,9 @@ export class Excel { // главный класс формирует все ко
     this.$el.append(this.getRoot());
 
     this.components.forEach((component) => component.init());
+  }
+
+  destroy() {
+    this.components.forEach((component) => component.destroy());
   }
 }
