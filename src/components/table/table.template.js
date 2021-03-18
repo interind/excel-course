@@ -4,14 +4,18 @@ const CODES = {
 };
 
 const DEFAULT_WIDTH = 120;
+const DEFAULT_HEIGHT = 20;
 
 function getWidth(state, index) {
   return (state[index] || DEFAULT_WIDTH) + 'px';
 }
+function getHeight(state, index) {
+  return (state[index] || DEFAULT_HEIGHT) + 'px';
+}
 
 function toCell(state, row) { // ячейки
   return function(_, col) {
-    const width = getWidth(state.colState, col);
+    const width = getWidth(state, col);
     return `
       <div class="cell"
         contenteditable
@@ -38,11 +42,16 @@ function toColumn({ col, index, width }) { // создаем колонку
   `;
 }
 
-function createRow(index, content='') { // создаем строчку
+function createRow(index, content='', state) { // создаем строчку
+  const height = getHeight(state, index);
   const resize = index ?
    '<div class="row-resize" data-resize="row"></div>' : '';
   return `
-    <div class="row" data-type="resizable">
+    <div
+    class="row"
+    data-type="resizable"
+    data-row=${index}
+    style="height: ${height}">
       <div class="row-info">
         ${index ? index : ''}
         ${resize}
@@ -58,7 +67,7 @@ function toChar(_, index) {
 
 function withWidthFrom(state) {
   return function(col, index) {
-    return {col, index, width: getWidth(state.colState, index)};
+    return {col, index, width: getWidth(state, index)};
   };
 }
 
@@ -69,16 +78,16 @@ export function createTable(rowsCount = 15, state = {}) {
   const cols = new Array(colsCount)
       .fill('') // заполняем массив
       .map(toChar) // заполняем буквами
-      .map(withWidthFrom(state)) // обработка под шаблон
+      .map(withWidthFrom(state.colState)) // обработка под шаблон
       .map(toColumn) // обработка под шаблон
       .join(''); // приводим массив к строке.
-  rows.push(createRow(null, cols));
+  rows.push(createRow(null, cols, {}));
   for (let row = 0; row < rowsCount; row++) {
     const cells = new Array(colsCount) // массив ячеек
         .fill('')
-        .map(toCell( state, row))
+        .map(toCell( state.colState, row))
         .join('');
-    rows.push(createRow(row + 1, cells));
+    rows.push(createRow(row + 1, cells, state.rowState));
   }
   return rows.join('');
 }
