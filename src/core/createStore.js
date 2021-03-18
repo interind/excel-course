@@ -20,3 +20,30 @@ export function createStore(rootReducer, initialState = {}) {
     },
   };
 }
+
+// class CreateStore {
+//   constructor(rootReducer, initialState = {}) {
+//     this.listeners = [];
+//     this.rootReducer = rootReducer;
+//     this.initialState = initialState;
+//     this.state = rootReducer({ ...initialState}, {type: '__INIT__' });
+//   }
+
+//   unsubscribe(fn) {
+//     this.listeners = this.listeners.filter((l) => l !== fn);
+//   }
+
+//   subscribe(fn) {
+//     this.listeners.push(fn);
+//     return this.unsubscribe(fn);
+//   }
+
+//   dispatch(action) {
+//     const state = this.rootReducer(this.state, action);
+//     this.listeners.forEach((listener) => listener(state));
+//   }
+
+//   getState() {
+//     return this.state;
+//   }
+// }

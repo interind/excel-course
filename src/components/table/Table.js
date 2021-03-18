@@ -32,16 +32,28 @@ export class Table extends ExcelComponent {
     this.$on('formula:done', () => {
       this.selection.current.focus();
     });
+    this.$subscribe((state) => {
+      console.log('Table', state);
+    });
   }
 
   selectCell($cell) {
     this.selection.select($cell);
     this.$emit('table:select', $cell);
+    this.$dispatch({action: 'TEST'});
   }
 
+  async resizeTable(event) {// приходти промис
+    try {
+      const data = await resizeHandler(this.$root, event);
+      console.log(data);
+    } catch (error) {
+      console.warn('resizeTable', error);
+    }
+  }
   onMousedown(event) {
     if (shouldResize(event)) {
-      resizeHandler(this.$root, event);
+      this.resizeTable(event);
     } else if (isCell(event)) {
       // const $cell = this.$root.find
       // (`[data-id="${event.target.dataset.id}"]`); тут поиск по DOM
