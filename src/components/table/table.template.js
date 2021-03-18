@@ -15,15 +15,17 @@ function getHeight(state, index) {
 
 function toCell(state, row) { // ячейки
   return function(_, col) {
-    const width = getWidth(state, col);
+    const id = `${row}:${col}`;
+    const width = getWidth(state.colState, col);
+    const data = state.dataState[id];
     return `
       <div class="cell"
         contenteditable
         data-col="${col}"
         data-type="cell"
-        data-id="${row}:${col}"
+        data-id="${id}"
         style="width: ${width}"
-      ></div>
+      >${data || ''}</div>
     `;
   };
 }
@@ -85,7 +87,7 @@ export function createTable(rowsCount = 15, state = {}) {
   for (let row = 0; row < rowsCount; row++) {
     const cells = new Array(colsCount) // массив ячеек
         .fill('')
-        .map(toCell( state.colState, row))
+        .map(toCell(state, row))
         .join('');
     rows.push(createRow(row + 1, cells, state.rowState));
   }

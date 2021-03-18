@@ -24,12 +24,13 @@ export class Formula extends ExcelComponent {
     this.$on('table:select', ($cell) => {
       this.$formula.text($cell.text());
     });
-    this.$on('table:input', ($cell) => {
-      this.$formula.text($cell.text());
-    });
+    // this.$on('table:input', ($cell) => {
+    //   this.$formula.text($cell.text());
+    // });
 
     this.$subscribe((state) => {
-      console.log('Formula', state);
+      console.log('Formula update', state.currentText);
+      this.$formula.text(state.currentText);
     });
   }
 

@@ -29,19 +29,20 @@ export class Table extends ExcelComponent {
 
     this.$on('formula:input', (text) => {
       this.selection.current.text(text);
+      this.updateTextInStore(text);
     });
     this.$on('formula:done', () => {
       this.selection.current.focus();
+      console.log('focus');
     });
-    this.$subscribe((state) => {
-      console.log('Table', state);
-    });
+    // this.$subscribe((state) => {
+    //   console.log('Table', state);
+    // });
   }
 
   selectCell($cell) {
     this.selection.select($cell);
     this.$emit('table:select', $cell);
-    this.$dispatch({action: 'TEST'});
   }
 
   async resizeTable(event) {// приходти промис
@@ -56,8 +57,6 @@ export class Table extends ExcelComponent {
     if (shouldResize(event)) {
       this.resizeTable(event);
     } else if (isCell(event)) {
-      // const $cell = this.$root.find
-      // (`[data-id="${event.target.dataset.id}"]`); тут поиск по DOM
       const $target = $(event.target);
       if (event.shiftKey) { // выделение ячеек
         const target = $target.id(true);
@@ -88,8 +87,15 @@ export class Table extends ExcelComponent {
     }
   }
 
+  updateTextInStore(value) {
+    this.$dispatch(actions.changeText({
+      id: this.selection.current.id(),
+      value,
+    }));
+  }
+
   onInput(event) {
-    this.$emit('table:input', $(event.target));
+    this.updateTextInStore($(event.target).text());
   }
 }
 
