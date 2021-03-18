@@ -4,6 +4,7 @@ import { resizeHandler } from './table.resize';
 import { ExcelComponent } from '../../core/ExcelComponent';
 import { TableSelection } from './TableSelection';
 import { shouldResize, isCell, matrix, nextSelector} from './table.functions';
+import * as actions from '../../redux/actions';// 'actions для redux
 export class Table extends ExcelComponent {
   static className = 'excel__table';
   constructor($root, options) {
@@ -15,7 +16,7 @@ export class Table extends ExcelComponent {
   }
 
   toHTML() {
-    return createTable(20); // возвращает разметку для Table
+    return createTable(20, this.store.getState());
   }
 
   prepare() {
@@ -46,9 +47,9 @@ export class Table extends ExcelComponent {
   async resizeTable(event) {// приходти промис
     try {
       const data = await resizeHandler(this.$root, event);
-      console.log(data);
+      this.$dispatch(actions.tableResize(data));
     } catch (error) {
-      console.warn('resizeTable', error);
+      console.warn('resizeTable', error.message);
     }
   }
   onMousedown(event) {
