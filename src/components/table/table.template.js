@@ -74,7 +74,6 @@ function withWidthFrom(state) {
 }
 
 export function createTable(rowsCount = 15, state = {}) {
-  console.log('tableTemplate', state);
   const colsCount = CODES.Z - CODES.A + 1; // количество столбцов
   const rows =[];
   const cols = new Array(colsCount)

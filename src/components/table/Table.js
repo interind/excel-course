@@ -33,7 +33,6 @@ export class Table extends ExcelComponent {
     });
     this.$on('formula:done', () => {
       this.selection.current.focus();
-      console.log('focus');
     });
     // this.$subscribe((state) => {
     //   console.log('Table', state);
@@ -45,7 +44,7 @@ export class Table extends ExcelComponent {
     this.$emit('table:select', $cell);
   }
 
-  async resizeTable(event) {// приходти промис
+  async resizeTable(event) {// приходит промис
     try {
       const data = await resizeHandler(this.$root, event);
       this.$dispatch(actions.tableResize(data));
