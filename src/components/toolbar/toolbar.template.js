@@ -1,7 +1,7 @@
 function toButton(button) {
   const meta = `
     data-type="button"
-    data-value=${JSON.stringify(button.value)}
+    data-value='${JSON.stringify(button.value)}'
   `;
   return `
     <div
@@ -17,37 +17,51 @@ function toButton(button) {
     </div>`;
 }
 
-export function createToolBar() {
+export function createToolBar(state) {
+  console.log(state);
   const buttons = [
     {
       icon: 'format_align_left',
-      active: false,
-      value: { textAlign: 'left' },
+      active: state['textAlign'] === 'left',
+      value: {
+        textAlign: state['textAlign'] === 'left' ? 'none' : 'left',
+      },
     },
     {
       icon: 'format_align_center',
-      active: false,
-      value: { textAlign: 'center' },
+      active: state['textAlign'] === 'center',
+      value: {
+        textAlign: state['textAlign'] === 'center' ? 'none' : 'center',
+      },
     },
     {
       icon: 'format_align_right',
-      active: false,
-      value: { textAlign: 'right' },
+      active: state['textAlign'] === 'right',
+      value: {
+        textAlign: state['textAlign'] === 'right' ? 'none' : 'right',
+      },
     },
     {
       icon: 'format_bold',
-      active: true,
-      value: { fontWeight: 'bold' },
+      active: state['fontWeight'] === 'bold',
+      value: {
+        fontWeight: state['fontWeight'] === 'bold' ? 'normal' : 'bold',
+      },
     },
     {
       icon: 'format_italic',
-      active: false,
-      value: { fontStyle: 'italic' },
+      active: state['fontStyle'] === 'italic',
+      value: {
+        fontStyle: state['fontStyle'] === 'italic' ? 'normal' : 'italic',
+      },
     },
     {
       icon: 'format_underlined',
-      active: false,
-      value: { textDecoration: 'underline' },
+      active: state['textDecoration'] === 'underline',
+      value: {
+        textDecoration: state['textDecoration'] === 'underline' ?
+         'none' : 'underline',
+      },
     },
   ];
   return buttons.map(toButton).join('');
