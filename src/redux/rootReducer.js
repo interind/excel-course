@@ -1,4 +1,10 @@
-import { TABLE_RESIZE, CHANGE_TEXT, CHANGE_STYLES, APPLY_STYLE } from './types';
+import {
+  TABLE_RESIZE,
+  CHANGE_TEXT,
+  CHANGE_STYLES,
+  APPLY_STYLE,
+  CHANGE_TITLE,
+} from './types';
 
 export function rootReducer(state, action) {
   let field;
@@ -16,6 +22,8 @@ export function rootReducer(state, action) {
       };
     case CHANGE_STYLES:
       return { ...state, currentStyles: action.data };
+    case CHANGE_TITLE:
+      return { ...state, title: action.data };
     case APPLY_STYLE:
       field = 'stylesState';
       val = state[field] || {};
