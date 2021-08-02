@@ -6,6 +6,13 @@ class Dom {
         selector;
   }
 
+  getStyles(styles = []) {
+    return styles.reduce((res, s) => {
+      res[s] = this.$el.style[s];
+      return res;
+    }, {});
+  }
+
   html(html) {
     if (typeof html === 'string') {
       this.$el.innerHTML = html;
@@ -15,7 +22,7 @@ class Dom {
   }
 
   text(text) {
-    if (typeof(text) === 'string') {
+    if (typeof text !== 'undefined') {
       this.$el.textContent = text;
       return this;
     } else if (this.$el.tagName.toLowerCase() === 'input') {
@@ -94,6 +101,14 @@ class Dom {
 
   getCoords() {
     return this.$el.getBoundingClientRect();
+  }
+
+  attr(name, value) {
+    if (value) {
+      this.$el.setAttribute(name, value);
+      return this;
+    }
+    return this.$el.getAttribute(name);
   }
 }
 

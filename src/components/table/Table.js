@@ -4,6 +4,9 @@ import { resizeHandler } from './table.resize';
 import { ExcelComponent } from '../../core/ExcelComponent';
 import { TableSelection } from './TableSelection';
 import { shouldResize, isCell, matrix, nextSelector} from './table.functions';
+import * as actions from '../../redux/actions';// 'actions для redux
+import { defaultStyles } from '../../utils/constants';
+import { parse } from '../../core/parse';
 export class Table extends ExcelComponent {
   static className = 'excel__table';
   constructor($root, options) {
@@ -15,7 +18,7 @@ export class Table extends ExcelComponent {
   }
 
   toHTML() {
-    return createTable(20); // возвращает разметку для Table
+    return createTable(20, this.store.getState());
   }
 
   prepare() {
@@ -27,24 +30,42 @@ export class Table extends ExcelComponent {
     this.selectCell(this.$root.find('[data-id="0:0"]'));
 
     this.$on('formula:input', (text) => {
-      this.selection.current.text(text);
+      this.selection.current
+          .attr('data-value', text)
+          .text(parse(text));
+      this.updateTextInStore(text);
     });
     this.$on('formula:done', () => {
       this.selection.current.focus();
+    });
+    this.$on('toolbar:applyStyle', (value) => {
+      this.selection.applyStyle(value);
+      this.$dispatch(actions.applyStyle({
+        value,
+        ids: this.selection.selectedIds,
+      }));
     });
   }
 
   selectCell($cell) {
     this.selection.select($cell);
     this.$emit('table:select', $cell);
+    const styles = $cell.getStyles(Object.keys(defaultStyles));
+    this.$dispatch(actions.changeStyles(styles));
   }
 
+  async resizeTable(event) {// приходит промис
+    try {
+      const data = await resizeHandler(this.$root, event);
+      this.$dispatch(actions.tableResize(data));
+    } catch (error) {
+      console.warn('resizeTable', error.message);
+    }
+  }
   onMousedown(event) {
     if (shouldResize(event)) {
-      resizeHandler(this.$root, event);
+      this.resizeTable(event);
     } else if (isCell(event)) {
-      // const $cell = this.$root.find
-      // (`[data-id="${event.target.dataset.id}"]`); тут поиск по DOM
       const $target = $(event.target);
       if (event.shiftKey) { // выделение ячеек
         const target = $target.id(true);
@@ -75,8 +96,15 @@ export class Table extends ExcelComponent {
     }
   }
 
+  updateTextInStore(value) {
+    this.$dispatch(actions.changeText({
+      id: this.selection.current.id(),
+      value,
+    }));
+  }
+
   onInput(event) {
-    this.$emit('table:input', $(event.target));
+    this.updateTextInStore($(event.target).text());
   }
 }
 
