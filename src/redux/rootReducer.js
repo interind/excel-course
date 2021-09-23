@@ -4,6 +4,7 @@ import {
   CHANGE_STYLES,
   APPLY_STYLE,
   CHANGE_TITLE,
+  UPDATE_DATE,
 } from './types';
 
 export function rootReducer(state, action) {
@@ -24,6 +25,8 @@ export function rootReducer(state, action) {
       return { ...state, currentStyles: action.data };
     case CHANGE_TITLE:
       return { ...state, title: action.data };
+    case UPDATE_DATE:
+      return {...state, dateOpenPage: new Date().toJSON()};
     case APPLY_STYLE:
       field = 'stylesState';
       val = state[field] || {};

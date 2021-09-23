@@ -1,14 +1,17 @@
 import { storage } from '../core/utils';
 
 function toHtml(key) {
-  const { title } = storage(key);
+  const { title, dateOpenPage } = storage(key);
   const id = key.split(':')[1];
-  const data = new Date(Number(key
-      .replace('excel:', ''))).toUTCString();
+  const date = new Date(dateOpenPage);
+
   return (`
     <li class="db__record">
       <a href="#excel/${id}">${title}</a>
-      <strong>${data}</strong>
+      <strong>
+      ${date.toLocaleDateString()}
+      ${date.toLocaleTimeString()}
+      </strong>
     </li>
   `);
 }

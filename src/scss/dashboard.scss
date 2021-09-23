@@ -3,6 +3,11 @@
 
 .db {
 
+  &__close:hover {
+    cursor: pointer;
+    opacity: .3;
+  }
+
   &__header {
     position: fixed;
     left: 0;
