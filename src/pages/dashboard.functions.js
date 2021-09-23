@@ -1,9 +1,12 @@
+import { storage } from '../core/utils';
+
 function toHtml(key) {
+  const { title } = storage(key);
   const data = new Date(Number(key
       .replace('excel:', ''))).toUTCString();
   return (`
     <li class="db__record">
-      <a href="#${key}">Таблица номер ${key}</a>
+      <a href="#${key}">${title}</a>
       <strong>${data}</strong>
     </li>
   `);
