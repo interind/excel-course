@@ -27,7 +27,9 @@ export class Header extends ExcelComponent {
         </div>
 
         <div class="button">
-          <i class="material-icons">exit_to_app</i>
+          <i
+            class="material-icons"
+          >exit_to_app</i>
         </div>
       </div>`;
   }

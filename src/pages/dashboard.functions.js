@@ -1,8 +1,10 @@
 function toHtml(key) {
+  const data = new Date(Number(key
+      .replace('excel:', ''))).toUTCString();
   return (`
     <li class="db__record">
       <a href="#${key}">Таблица номер ${key}</a>
-      <strong>12.06.2020</strong>
+      <strong>${data}</strong>
     </li>
   `);
 }
@@ -16,7 +18,6 @@ function getAllKeys() {
     }
     keys.push(key);
   }
-
   return keys;
 }
 

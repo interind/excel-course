@@ -43,7 +43,6 @@ module.exports = {
   },
   devtool: isDev ? 'source-map' : false,
   devServer: {
-    contentBase: path.resolve(__dirname, './dist'),
     compress: true, // это ускорит загрузку в режиме разработки
     port: 3000, // порт, чтобы открывать сайт по адресу localhost:8080,
 
