@@ -23,11 +23,11 @@ export class Header extends ExcelComponent {
     if ($target.data.button === 'remove') {
       const decision = confirm('Delete board?');
       if (decision) {
-        localStorage.removeItem('exel:' + ActiveRoute.param);
-        ActiveRoute.navigate('/');
+        localStorage.removeItem('excel:' + ActiveRoute.param);
+        ActiveRoute.navigate('');
       }
     } else if ($target.data.button === 'exit') {
-      ActiveRoute.navigate('/');
+      ActiveRoute.navigate('');
     }
   }
 

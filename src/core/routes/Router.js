@@ -10,6 +10,7 @@ export class Router {
     this.routes = routes;
     this.page = null;
     this.changePageHandler = this.changePageHandler.bind(this);
+    this.init();
   }
 
   init() {
@@ -23,7 +24,7 @@ export class Router {
     }
     this.$placeholder.clear();
     const Page = ActiveRoute.path.includes('excel') ? this.routes.excel :
-    this.routes.dashboard;
+          this.routes.dashboard;
     this.page = new Page(ActiveRoute.param);
     this.$placeholder.append(this.page.getRoot());
     this.page.afterRender();

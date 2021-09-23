@@ -2,11 +2,12 @@ import { storage } from '../core/utils';
 
 function toHtml(key) {
   const { title } = storage(key);
+  const id = key.split(':')[1];
   const data = new Date(Number(key
       .replace('excel:', ''))).toUTCString();
   return (`
     <li class="db__record">
-      <a href="#${key}">${title}</a>
+      <a href="#excel/${id}">${title}</a>
       <strong>${data}</strong>
     </li>
   `);
