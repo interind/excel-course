@@ -14,3 +14,5 @@
 
 ## пуск:
 * старт через npm run start
+
+ссылка  https://interind.github.io/excel-course/

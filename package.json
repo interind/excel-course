@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=development webpack serve",
     "build": "cross-env NODE_ENV=production webpack --mode production",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -39,6 +41,7 @@
     "eslint": "^7.27.0",
     "eslint-config-google": "^0.14.0",
     "eslint-loader": "^4.0.2",
+    "gh-pages": "^3.2.3",
     "html-webpack-plugin": "^5.3.1",
     "mini-css-extract-plugin": "^1.6.0",
     "node-sass": "^6.0.1",
