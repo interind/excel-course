@@ -6,3 +6,7 @@ export const defaultStyles = {
 };
 
 export const defaultTitle = 'Новая таблица';
+
+export const NODE_ENV = process.env.NODE_ENV;
+export const PRODUCTION = 'production';
+export const DEVELOPMENT = 'development';

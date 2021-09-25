@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -43,13 +44,15 @@ module.exports = {
   },
   devtool: isDev ? 'source-map' : false,
   devServer: {
-    contentBase: path.resolve(__dirname, './dist'),
     compress: true, // это ускорит загрузку в режиме разработки
-    port: 3000, // порт, чтобы открывать сайт по адресу localhost:8080,
+    port: 8080, // порт, чтобы открывать сайт по адресу localhost:8080,
 
     open: true, // сайт будет открываться сам при запуске npm run dev
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+    }),
     new CleanWebpackPlugin(),
     new HTMLWebpackPlugin({
       template: 'index.html',

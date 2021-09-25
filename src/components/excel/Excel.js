@@ -1,10 +1,10 @@
 import { $ } from '../../core/Dom';
 import { Emitter } from '../../core/Emitter';
 import { StoreSubscriber } from '../../core/StoreSubscriber';
+import { updateDate } from '../../redux/actions';
 
 export class Excel { // главный класс формирует все компоненты.
-  constructor(selector, options) {
-    this.$el = $(selector), // теперь это наследник Dom.
+  constructor(options) {
     this.components = options.components || [];
     this.store = options.store;
     this.emitter = new Emitter();
@@ -25,8 +25,8 @@ export class Excel { // главный класс формирует все ко
     return $root;
   }
 
-  render() { // главный рендер все приходят сюда.
-    this.$el.append(this.getRoot());
+  init() {
+    this.store.dispatch(updateDate());
     this.subscriber.subscribeComponents(this.components);
     this.components.forEach((component) => component.init());
   }
