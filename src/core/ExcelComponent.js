@@ -30,15 +30,11 @@ export class ExcelComponent extends DomListener {
     this.store.dispatch(action);
   }
 
-  // $subscribe(fn) {
-  //   this.storeSub = this.store.subscribe(fn);
-  // }
-  // NOTE: приходят только подписанные изменения
   storeChanged() {
   }
 
   isWatching(key) {
-    return this.$subscribe.includes(key);
+    return this.subscribe.includes(key);
   }
 
   init() {
