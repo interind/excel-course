@@ -1,4 +1,4 @@
-# excel-course
+# excel-course : процесс разработки
 
 * Проект построен на ООП в javaScript
 * Сборка WebPack + scss
