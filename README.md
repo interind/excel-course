@@ -12,7 +12,14 @@
 * Выделение нескольких ячеек
 * Удаление таблиц
 
+## скриншот
+![My image](./src/images/excel-page.png)
+
 ## пуск:
 * старт через npm run start
 
-ссылка  https://interind.github.io/excel-course/
+\
+\
+\
+\
+[ссылка на проект](https://interind.github.io/excel-course/)
